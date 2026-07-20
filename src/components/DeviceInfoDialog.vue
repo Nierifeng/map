@@ -1,14 +1,9 @@
 <template>
-  <el-dialog
-    v-model="dialogVisible"
-    width="30%"
-    :class="{ 'error-shadow': deviceStatus === 1 }"
-    @close="handleClose"
-  >
+  <el-dialog v-model="dialogVisible" width="30%" :class="{ 'error-shadow': deviceStatus === 1 }" @close="handleClose">
     <template #header>
       <div class="header">设备信息</div>
     </template>
-    
+
     <div class="dialog-content">
       <!-- 基本信息 -->
       <div class="basic-info">
@@ -23,25 +18,29 @@
             {{ deviceStatus === 1 ? '报警' : '正常' }}
           </span>
         </div>
+        <div class="info-row">
+          <span class="label">更新时间:</span>
+          <span class="value status" :class="{ 'alarm': deviceStatus === 1 }">
+            {{ deviceData?.lastUpdate || '--' }}
+          </span>
+        </div>
       </div>
 
       <!-- 通道列表 -->
       <div v-if="deviceId && sortedChannels.length > 0" class="channels-section">
         <h4>通道列表 ({{ sortedChannels.length }}个)</h4>
         <div class="channel-list">
-          <div 
-            v-for="channel in sortedChannels" 
-            :key="channel.channel"
-            :class="['channel-item', { 'alarm': channel.status === 1 }]"
-          >
+          <div v-for="channel in sortedChannels" :key="channel.channel"
+            :class="['channel-item', { 'alarm': channel.status === 1 }]">
             <div class="channel-header">
               <span class="channel-name">通道 {{ `[${channel.channel}] ${channel.address}` }}</span>
               <span class="channel-status" :class="{ 'alarm': channel.status === 1 }">
                 {{ channel.status === 1 ? '报警' : '正常' }}
               </span>
             </div>
-            <div class="channel-details">
-              <span class="channel-time">更新时间: {{ formatTimestamp(channel.lastUpdate) }}</span>
+            <div v-if="channel.alarmTime || channel.lastAlarmTime" class="channel-details">
+              <span v-if="channel.alarmTime" class="channel-time">异常用电时间: {{ channel.alarmTime }}</span>
+              <span v-else-if="channel.lastAlarmTime" class="channel-time">上次充电时间: {{ channel.lastAlarmTime }}</span>
             </div>
           </div>
         </div>
@@ -59,7 +58,6 @@
 import { computed } from 'vue';
 import BJD1 from "../assets/bjd1.png?url";
 import BJD2 from "../assets/bjd2.png?url";
-import { formatTimestamp } from '../utils/deviceUtils';
 import type { DevicePoint, DeviceData, DeviceStatus } from '../types/config';
 
 interface Props {
@@ -91,7 +89,7 @@ const deviceStatus = computed((): DeviceStatus => {
 // 排序后的通道列表
 const sortedChannels = computed((): DevicePoint[] => {
   if (!props.deviceData) return [];
-  
+
   const channels = Array.from(props.deviceData.channels.values());
   return channels.sort((a, b) => {
     // 报警状态优先
@@ -237,8 +235,4 @@ const handleClose = (): void => {
   color: #999;
   padding: 40px 0;
 }
-
-
 </style>
-
-

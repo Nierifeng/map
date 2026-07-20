@@ -1,12 +1,3 @@
-declare module '*/public/config.js' {
-  interface Config {
-    baseURL: string;
-  }
-
-  const config: Config;
-  export default config;
-}
-
 // 设备相关类型定义
 export interface DevicePoint {
   deviceId: string;
@@ -16,6 +7,8 @@ export interface DevicePoint {
   };
   status: number;
   lastUpdate: string;
+  alarmTime: string;
+  lastAlarmTime: string;
   channel: string;
   address: string;
   data: {
@@ -33,6 +26,12 @@ export interface WorkerMessage {
     lat: number;
     power: number;
     state: number;
+    updateTime?: string;
+    alarmTime?: string | null;
+    lastAlarmTime?: string | null;
+    UpdateTime?: string;
+    AlarmTime?: string | null;
+    LastAlarmTime?: string | null;
   } | string;
   timestamp: string;
 }

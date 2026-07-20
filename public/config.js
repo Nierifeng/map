@@ -1,5 +1,3 @@
-const config = {
-  baseURL: 'http://139.196.243.9:5286/api',
+window.config = {
+  baseURL: 'http://192.168.12.196:5262/api',
 };
-
-export default config;

@@ -81,9 +81,6 @@ cp .env.example .env
 ```bash
 # 百度地图API密钥
 VITE_BAIDU_MAP_AK=your_baidu_map_api_key_here
-
-# API基础URL
-VITE_API_BASE_URL=http://your-api-server:port/api
 ```
 
 ### 安装依赖
@@ -124,10 +121,12 @@ npm run preview
 ### API配置
 在 `public/config.js` 中配置后端API地址：
 ```javascript
-const config = {
+window.config = {
   baseURL: 'http://your-api-server:port/api',
 };
 ```
+
+部署后可直接修改该文件，无需重新打包。
 
 ### SignalR配置
 在 `public/workers/unitySignalr.js` 中配置SignalR连接地址。

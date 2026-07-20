@@ -4,7 +4,7 @@ export const env = {
   BAIDU_MAP_AK: import.meta.env.VITE_BAIDU_MAP_AK || '',
 
   // API基础URL
-  API_BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://139.196.243.9:5286/api',
+  API_BASE_URL: window.config.baseURL,
 
   // 当前环境
   NODE_ENV: import.meta.env.MODE,

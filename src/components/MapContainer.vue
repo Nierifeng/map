@@ -3,36 +3,24 @@
     <div class="title">
       <div class="subTitle">海仿智能安全用电卫士系统</div>
     </div>
-    
+
     <div class="card">
-      <baidu-map
-        class="bm-view"
-        :zoom="zoom"
-        :center="center"
-        @ready="handleMapReady"
-        v-loading="isLoading"
-        element-loading-text="正在加载地图..."
-        element-loading-background="rgba(0, 0, 0, 0.8)"
-      >
+      <baidu-map class="bm-view" :zoom="zoom" :center="center" :map-click="false" @ready="handleMapReady"
+        v-loading="isLoading" element-loading-text="正在加载地图..." element-loading-background="rgba(0, 0, 0, 0.8)">
         <!-- 动态渲染所有设备标记点 -->
-        <DeviceMarker
-          v-for="deviceId in deviceIds"
-          :key="deviceId"
-          :device-id="deviceId"
-          :position="getDevicePosition(deviceId)"
-          :status="getDeviceStatus(deviceId)"
-          @click="handleDeviceClick"
-        />
+        <DeviceMarker v-for="deviceId in deviceIds" :key="deviceId" :device-id="deviceId"
+          :position="getDevicePosition(deviceId)" :status="getDeviceStatus(deviceId)" @click="handleDeviceClick" />
       </baidu-map>
     </div>
 
+    <div class="status-legend" aria-label="设备状态颜色说明">
+      <span><img src="/green.svg" alt="">正常</span>
+      <span><img src="/red.svg" alt="">充电</span>
+    </div>
+
     <!-- 设备信息弹窗 -->
-    <DeviceInfoDialog
-      v-model:visible="dialogVisible"
-      :device-id="selectedDeviceId"
-      :device-data="selectedDeviceData"
-      @close="handleDialogClose"
-    />
+    <DeviceInfoDialog v-model:visible="dialogVisible" :device-id="selectedDeviceId" :device-data="selectedDeviceData"
+      @close="handleDialogClose" />
   </div>
 </template>
 
@@ -49,7 +37,8 @@ import type { MapCenter } from '../types/config';
 
 // 地图配置
 const center = ref<MapCenter>({ lng: 121.40953, lat: 31.260756 });
-const zoom = ref<number>(15);
+const zoom = ref<number>(18);
+const mapTheme = [{ featureType: 'poi', elementType: 'all', stylers: { visibility: 'off' } }];
 
 // 弹窗状态
 const dialogVisible = ref<boolean>(false);
@@ -91,8 +80,8 @@ const { isConnected, connectionError } = useSignalR({
 
 // 地图准备就绪处理
 const handleMapReady = (): void => {
-  center.value = { lng: 121.40953, lat: 31.260756 };
-  zoom.value = 15;
+  center.value = { lng: 121.492300, lat: 31.269737 };
+  zoom.value = 20;
 };
 
 // 设备标记点击处理
@@ -162,5 +151,29 @@ onMounted(() => {
 .bm-view {
   width: 100%;
   height: 100%;
+}
+
+.status-legend {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1;
+  display: flex;
+  gap: 16px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.status-legend span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-legend img {
+  width: 16px;
+  height: 20px;
 }
 </style>

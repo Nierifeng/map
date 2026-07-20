@@ -65,6 +65,10 @@ export function useDeviceData() {
 
     const { deviceId } = message;
     const { channel, address, lon, lat, power, state } = message.response;
+    const updateTime = message.response.updateTime || message.response.UpdateTime;
+    const alarmTime = message.response.alarmTime || message.response.AlarmTime;
+    const lastAlarmTime = message.response.lastAlarmTime || message.response.LastAlarmTime;
+    const lastUpdate = formatTimestamp(updateTime || message.timestamp);
     
     const channelId = generateChannelId(deviceId, channel);
     const position = { lng: lon, lat: lat };
@@ -74,7 +78,9 @@ export function useDeviceData() {
       deviceId,
       position,
       status: state,
-      lastUpdate: formatTimestamp(new Date()),
+      lastUpdate,
+      alarmTime: alarmTime ? formatTimestamp(alarmTime) : '',
+      lastAlarmTime: lastAlarmTime ? formatTimestamp(lastAlarmTime) : '',
       channel,
       address,
       data: { power }
@@ -91,7 +97,7 @@ export function useDeviceData() {
         channels: new Map(),
         position,
         status: state,
-        lastUpdate: formatTimestamp(new Date()),
+        lastUpdate,
         address
       };
       deviceDataMap.value.set(deviceId, deviceData);
@@ -102,7 +108,7 @@ export function useDeviceData() {
     deviceData.position = position; // 更新位置
     deviceData.address = address; // 更新地址
     deviceData.status = getDeviceStatus(deviceId); // 重新计算设备状态
-    deviceData.lastUpdate = formatTimestamp(new Date());
+    deviceData.lastUpdate = lastUpdate;
   };
 
   // 获取所有设备ID列表

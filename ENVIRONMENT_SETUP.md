@@ -27,9 +27,6 @@ cp .env.example .env
 # 百度地图API密钥
 VITE_BAIDU_MAP_AK=RB8eTKX9xgQzX0sKoUfAvWHxRg3haYon
 
-# API基础URL
-VITE_API_BASE_URL=http://139.196.243.9:5286/api
-
 # 开发环境配置
 VITE_APP_ENV=development
 ```
@@ -76,6 +73,7 @@ npm run dev
 
 - `.env` - 环境变量配置文件（不提交到Git）
 - `.env.example` - 环境变量示例文件
+- `public/config.js` - API 地址运行时配置
 - `src/config/env.ts` - 环境变量读取和验证
 - `src/vite-env.d.ts` - TypeScript类型定义
 

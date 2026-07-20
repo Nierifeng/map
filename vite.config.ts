@@ -30,12 +30,15 @@ export default defineConfig({
   },
   build: {
     // 代码分割优化
-    rollupOptions: {
+    rolldownOptions: {
       output: {
-        manualChunks: {
-          vendor: ['vue', 'vue-router'],
-          ui: ['element-plus'],
-          map: ['vue-baidu-map-3x'],
+        codeSplitting: {
+          includeDependenciesRecursively: false,
+          groups: [
+            { name: 'vendor', test: /node_modules[\\/](?:@vue[\\/]|vue(?:-router)?[\\/])/ },
+            { name: 'ui', test: /node_modules[\\/]element-plus[\\/]/ },
+            { name: 'map', test: /node_modules[\\/]vue-baidu-map-3x[\\/]/ },
+          ],
         },
       },
     },
