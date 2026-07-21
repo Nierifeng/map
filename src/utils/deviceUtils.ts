@@ -7,7 +7,7 @@ import type { DeviceStatus, MapIcon } from '../types/config';
  */
 export function generateDeviceIcon(status: DeviceStatus): MapIcon {
   return {
-    url: status > 0 ? "/red.gif" : "/green.svg",
+    url: status > 0 ? "/red.svg" : "/green.svg",
     size: { width: 31, height: 40 }
   };
 }

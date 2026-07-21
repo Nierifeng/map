@@ -3,26 +3,24 @@
     <title>编组 20</title>
     <defs>
         <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
-            <stop stop-color="#00EEF7" offset="0%"></stop>
-            <stop stop-color="#003CB8" offset="100%"></stop>
+            <stop stop-color="#FFD863" offset="0%"></stop>
+            <stop stop-color="#A38B00" offset="100%"></stop>
         </linearGradient>
-        <linearGradient x1="63.3958159%" y1="95.1736695%" x2="36.6041841%" y2="-2.31526583%" id="linearGradient-2">
-            <stop stop-color="#004BA5" stop-opacity="0.995684003" offset="0%"></stop>
-            <stop stop-color="#00FFFF" offset="100%"></stop>
-            <stop stop-color="#00FFFF" offset="100%"></stop>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#FFD863" offset="0%"></stop>
+            <stop stop-color="#A38B00" offset="100%"></stop>
         </linearGradient>
-        <linearGradient x1="63.3958159%" y1="70.4263716%" x2="38.3096832%" y2="-6.66133815e-14%" id="linearGradient-3">
-            <stop stop-color="#004BA5" stop-opacity="0.995684003" offset="0%"></stop>
-            <stop stop-color="#00FFFF" offset="100%"></stop>
-            <stop stop-color="#00FFFF" offset="100%"></stop>
+        <linearGradient x1="50%" y1="0%" x2="68.6577631%" y2="65.6538755%" id="linearGradient-3">
+            <stop stop-color="#FFD863" offset="0%"></stop>
+            <stop stop-color="#A38B00" offset="100%"></stop>
         </linearGradient>
     </defs>
     <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Apple-TV" transform="translate(-2955.000000, -549.000000)">
-            <g id="编组-20" transform="translate(2955.156031, 549.716304)">
+        <g id="Apple-TV" transform="translate(-2568.000000, -878.000000)">
+            <g id="编组-20" transform="translate(2568.156031, 878.716304)">
                 <path d="M0,26.793627 C3.57288093,8.931209 13.539878,0 29.9009912,0 C46.2621044,0 56.2951074,8.931209 60,26.793627 C46.9083494,33.6716298 36.8753465,37.1106312 29.9009912,37.1106312 C22.9266359,37.1106312 12.9596389,33.6716298 0,26.793627 Z" id="路径-16" fill="url(#linearGradient-1)"></path>
                 <polygon id="路径-15" fill="url(#linearGradient-2)" points="1.93600394e-12 26.793627 30.0990088 84.9440143 30.0990088 37.1106312"></polygon>
-                <ellipse id="椭圆形" stroke="#006EFF" cx="30.5590264" cy="84.9440143" rx="19.1323049" ry="3.25163789"></ellipse>
+                <ellipse id="椭圆形" stroke="#FF8C00" cx="30.5590264" cy="84.9440143" rx="19.1323049" ry="3.25163789"></ellipse>
                 <polygon id="路径-15" fill="url(#linearGradient-3)" transform="translate(44.950496, 55.868821) scale(-1, 1) translate(-44.950496, -55.868821) " points="29.9009912 26.793627 60 84.9440143 60 37.1106312"></polygon>
             </g>
         </g>
