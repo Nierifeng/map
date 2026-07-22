@@ -1,8 +1,9 @@
 <template>
   <div class="map-container">
-    <div class="title">
-      <div class="subTitle">海仿智能安全用电卫士系统</div>
-    </div>
+    <img class="dashboard-header" src="/imgs/header.png" alt="社区电力服务管理平台">
+    <time class="dashboard-time">{{ currentTime }}</time>
+    <img class="dashboard-panel dashboard-panel--left" src="/imgs/left-panel.png" alt="左侧数据面板">
+    <img class="dashboard-panel dashboard-panel--right" src="/imgs/right-panel.png" alt="右侧数据面板">
 
     <div class="card">
       <baidu-map class="bm-view" :zoom="zoom" :center="center" :map-click="false" @ready="handleMapReady"
@@ -12,11 +13,7 @@
           :position="getDevicePosition(deviceId)" :status="getDeviceStatus(deviceId)" @click="handleDeviceClick" />
       </baidu-map>
     </div>
-
-    <div class="status-legend" aria-label="设备状态颜色说明">
-      <span><img src="/green.svg" alt="">正常</span>
-      <span><img src="/red.svg" alt="">充电</span>
-    </div>
+    <img class="status-legend" src="/imgs/icons.png" alt="设备状态图例：红色已告警，蓝色正常">
 
     <!-- 设备信息弹窗 -->
     <DeviceInfoDialog v-model:visible="dialogVisible" :device-id="selectedDeviceId" :device-data="selectedDeviceData"
@@ -25,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import DeviceMarker from './DeviceMarker.vue';
 import DeviceInfoDialog from './DeviceInfoDialog.vue';
 import { useDeviceData } from '../composables/useDeviceData';
@@ -39,6 +36,9 @@ import type { MapCenter } from '../types/config';
 const center = ref<MapCenter>({ lng: 121.40953, lat: 31.260756 });
 const zoom = ref<number>(18);
 const mapTheme = [{ featureType: 'poi', elementType: 'all', stylers: { visibility: 'off' } }];
+const formatCurrentTime = (): string => new Date().toLocaleString('sv-SE').replaceAll('-', '.');
+const currentTime = ref(formatCurrentTime());
+let clockTimer: number;
 
 // 弹窗状态
 const dialogVisible = ref<boolean>(false);
@@ -1217,7 +1217,10 @@ const fetchDevices = async (): Promise<void> => {
 // 组件挂载时初始化
 onMounted(() => {
   fetchDevices();
+  clockTimer = window.setInterval(() => currentTime.value = formatCurrentTime(), 1000);
 });
+
+onBeforeUnmount(() => window.clearInterval(clockTimer));
 </script>
 
 <style scoped>
@@ -1227,25 +1230,44 @@ onMounted(() => {
   position: relative;
 }
 
-.title {
-  background-image: url("/imgs/bg.png");
-  background-repeat: no-repeat;
-  background-position: center;
+.dashboard-header,
+.dashboard-panel {
   position: absolute;
-  top: 0;
-  left: 0;
-  height: 60px;
-  width: 100%;
-  z-index: 1;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
 }
 
-.subTitle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  letter-spacing: 10px;
-  font-size: 2.5rem;
+.dashboard-header {
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.dashboard-time {
+  position: absolute;
+  top: 1.38vw;
+  left: 2.75vw;
+  z-index: 3;
   color: #fff;
+  font-size: clamp(14px, 0.64vw, 18px);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.dashboard-panel {
+  top: calc(3.4vw + 20px);
+  width: 17.425vw;
+}
+
+.dashboard-panel--left {
+  left: 20px;
+}
+
+.dashboard-panel--right {
+  right: 20px;
 }
 
 .card {
@@ -1260,25 +1282,11 @@ onMounted(() => {
 
 .status-legend {
   position: absolute;
-  right: 20px;
+  left: calc(17.425vw + 40px);
   bottom: 20px;
-  z-index: 1;
-  display: flex;
-  gap: 16px;
-  padding: 10px 14px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.status-legend span {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.status-legend img {
-  width: 16px;
-  height: 20px;
+  z-index: 2;
+  width: 4.575vw;
+  pointer-events: none;
+  user-select: none;
 }
 </style>
